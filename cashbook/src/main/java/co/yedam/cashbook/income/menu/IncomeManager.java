@@ -1,7 +1,9 @@
 package co.yedam.cashbook.income.menu;
 
-
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 import co.yedam.cashbook.income.service.IncomeService;
@@ -15,9 +17,9 @@ public class IncomeManager {
 
 	private void mainTitle() {
 		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("+   1. 소득추가        2. 수정하기        3. 삭제하기    +");
+		System.out.println("+    1. 소득추가         2. 수정하기        3. 삭제하기    +");
 		System.out.println("+-------------------------------------------------+");
-		System.out.println("+   4. 전체 소득 목록   5. 일별 소득 목록   6.메인메뉴     +");
+		System.out.println("+    4. 전체 소득 목록    5. 일별 소득 목록    6.메인메뉴     +");
 		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
 		System.out.print("메뉴를 선택하세요 >> ");
 	}
@@ -31,82 +33,125 @@ public class IncomeManager {
 
 			switch (menu) {
 			case 1:
-//				incomeInsert();          //소득 추가하기			
+				incomeInsert();
 				break;
 			case 2:
 				incomeUpdate();
 				break;
 
 			case 3:
-
+				incomeDelete();
 				break;
 
 			case 4:
-
+				incomeList();
 				break;
 			case 5:
 
 				break;
 			case 6:
-
+				b = true;
 				break;
 			}
 		} while (!b);
 
 	}
+	
+	
+	
+	// --------------------------------------------- 전체목록 조회
+	private void incomeList() {
+		List<IncomeVO> incomes = new ArrayList<IncomeVO>();
 
+		incomes = dao.IncomeSelectList();
+		for (IncomeVO i : incomes) {
+			i.toString();
+		}
+		
+	}
+
+	// --------------------------------------------- 삭제하기
+	private void incomeDelete() {
+		IncomeVO vo = new IncomeVO();
+		System.out.println("삭제 날짜 입력");
+		vo.setInDate(sc.nextLine()); // ★★★★★★★★★★★이거 진짜 어케해요
+
+		int n = dao.IncomeDelete(vo);
+		if (n != 0) {
+			System.out.println("삭제 완료");
+		} else {
+			System.out.println("삭제 실패");
+		}
+	}
+
+	// --------------------------------------------- 수정하기
 	private void incomeUpdate() {
 		IncomeVO vo = new IncomeVO();
 		System.out.println("수정 날짜를 입력하세요");
 		vo.setInDate(sc.nextLine());
-		subtitle();
+		submenu();
 		int key = sc.nextInt();
 		sc.nextLine();
 		switch (key) {
 		case 1:
-			System.out.println("=== 제품명을 입력하세요 ===");
-			vo.setProductName(sc.nextLine());
-			System.out.println("== 제품가격을 입력하세요");
-			vo.setProductPrice(sc.nextInt());
+			System.out.println("금액을 입력하세요");
+			vo.setMoneyIn(sc.nextInt());
 			sc.nextLine();
-			System.out.println("== 제품모델을 입력하세요");
-			vo.setProductModel(sc.nextLine());
+			System.out.println("소득 그룹을 입력하세요");
+			vo.setInGroup(sc.nextLine());
+//			System.out.println("소득 날짜를 입력하세요");
+//			vo.setInDate(sc.nextLine());
 			break;
 		case 2:
-			System.out.println("=== 제품명을 입력하세요 ===");
-			vo.setProductName(sc.nextLine());
-			break;
-		case 3:
-			System.out.println("== 제품가격을 입력하세요");
-			vo.setProductPrice(sc.nextInt());
+			System.out.println("금액을 입력하세요");
+			vo.setMoneyIn(sc.nextInt());
 			sc.nextLine();
 			break;
+		case 3:
+			System.out.println("소득 그룹을 입력하세요");
+			vo.setInGroup(sc.nextLine());
+			break;
 		case 4:
-			System.out.println("== 제품모델을 입력하세요");
-			vo.setProductModel(sc.nextLine());
+//			System.out.println("소득 날짜를 입력하세요");
+//			vo.setInDate(sc.nextLine());
 			break;
 		}
-		int n = dao.productUpdate(vo);
+		int n = dao.IncomeUpdate(vo);
 		if (n != 0) {
-			System.out.println("제품 정보 변경 성공");
-		}else {
-			System.out.println("제품 정보 변경 실패");
+			System.out.println("수정 완료");
+		} else {
+			System.out.println("수정 실패");
 		}
 
 	}
 
+	private void submenu() {
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("+   1. 전체 수정  2. 금액 수정   3. 그룹 수정  4. 날짜 수정   +");
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.print("메뉴를 선택하세요 >> ");
+	}
+
+	// --------------------------------------------- 추가하기
 	private void incomeInsert() {
-		
-		
+
 		IncomeVO vo = new IncomeVO();
 		System.out.print("금액을 입력하세요 >> ");
-		vo.setMoneyIn(sc.nextInt());sc.nextLine();
+		vo.setMoneyIn(sc.nextInt());
+		sc.nextLine();
 		System.out.print("소득 그룹을 선택하세요 >> ");
 		vo.setInGroup(sc.nextLine());
-		System.out.print("소득 날짜를 선택하세요( >> ");
-		vo.setInDate(sc.nextLine());		
+//		System.out.print("소득 날짜를 선택하세요( >> ");
+//		 vo.setInDate(sc.nextLine());			
 		System.out.print("소득 내용을 입력하세요(선택사항) >> ");
 		vo.setInMemo(sc.nextLine());
-		
+
+		int n = dao.IncomeInsert(vo);
+		if (n != 0) {
+			System.out.println("소득 저장 완료");
+		} else {
+			System.out.println("소득 저장 실패");
+		}
+
 	}
 }

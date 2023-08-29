@@ -2,37 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yedam.cashbook.income.mapper.IncomeMapper">
 	<select id="incomeSelectList"
-		resultType="co.yedam.cashbook.income.service.incomeVO">
-		SELECT * FROM CASH_IN
+		resultType="co.yedam.cashbook.income.service.IncomeVO">
+		SELECT * FROM CASH_IN ORDER BY in_date
 	</select>
 
 	<select id="incomeSelect"
-		resultType="co.yedam.cashbook.income.service.incomeVO">
+		resultType="co.yedam.cashbook.income.service.IncomeVO">
 		SELECT * FROM CASH_IN
-		where IN_DATE = #{inDate}
+		WHERE IN_DATE = #{inDate}
 	</select>
 	
 	<insert id="incomeInsert"
-		parameterType ="co.yedam.cashbook.income.service.incomeVO">
+		parameterType ="co.yedam.cashbook.income.service.IncomeVO">
 		INSERT INTO CASH_IN
-		VALUES(#{moneyIn},#{inGroup},#{inDate},#{inMemo})
+		VALUES(#{inId},#{moneyIn},#{inGroup},#{inDate},#{inMemo})
 	</insert>
 	
-	<delete id="incomeDeletet"
-		parameterType ="co.yedam.cashbook.income.service.incomeVO">
-		DELETE FROM CASH_IN WHERE IN_DATE = #{inDate}
+	<delete id="incomeDelete"
+		parameterType ="co.yedam.cashbook.income.service.IncomeVO">
+		DELETE FROM CASH_IN 
+		WHERE IN_DATE = #{inDate}
 	</delete>
 	
 	<update id="incomeUpdate"
-		parameterType="co.yedam.cashbook.income.service.incomeVO">
-		UPDATE PRODUCT
+		parameterType="co.yedam.cashbook.income.service.IncomeVO">
+		UPDATE CASH_IN
 		<set>
-			<if test="moneyIn != null">MONEY_IN = #{moneyIn},</if>
-			<if test="inGroup != 0">IN_GROUP = #{inGroup},</if>
-			<if test="inDate != null">IN_DATE = #{inDate},</if>
-			<if test="inMemo != null">IN_MEMO = #{inMemo},</if>
+			<if test="moneyIn != 0">MONEY_IN = #{moneyIn},</if>
+			<if test="inGroup != null">IN_GROUP = #{inGroup},</if>
+			<if test="inMemo">IN_MEMO = #{inMemo},</if>
 		</set>
-		WHERE IN_ID = #{inId}
+		WHERE IN_DATE = #{inDate}
 	</update>
 
 

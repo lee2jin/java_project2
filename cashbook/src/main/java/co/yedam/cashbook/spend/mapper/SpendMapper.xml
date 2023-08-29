@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yedam.cashbook.spend.mapper.SpendMapper">
+	<select id="spendSelectList"
+		resultType="co.yedam.cashbook.spend.service.SpendVO">
+		SELECT * FROM CASH_OUT ORDER BY out_date
+	</select>
 
-	
+	<select id="spendSelect"
+		resultType="co.yedam.cashbook.spend.service.SpendVO">
+		SELECT * FROM CASH_OUT
+		WHERE OUT_DATE = #{outDate}
+	</select>
 
+	<insert id="spendInsert"
+		parameterType="co.yedam.cashbook.spend.service.SpendVO">
+		INSERT INTO CASH_OUT
+		VALUES(#{outId},#{outMoney},#{outGroup},#{outDate},#{outMemo})
+	</insert>
+	<delete id="spendDelete"
+		parameterType="co.yedam.cashbook.spend.service.SpendVO">
+		DELETE FROM CASH_OUT
+		WHERE OUT_DATE = #{outDate}
+	</delete>
+	<update id="spendUpdate"
+		parameterType="co.yedam.cashbook.spend.service.SpendVO">
+		UPDATE CASH_IN
+		<set>
+			<if test="outMoney != 0">OUT_MONEY = #{outMoney},</if>
+			<if test="outGroup != null">OUT_GROUP = #{outGroup},</if>
+			<if test="outMemo">OUT_MEMO = #{outMemo},</if>
+		</set>
+		WHERE OUT_DATE = #{outDate}
+	</update>
 
 </mapper>

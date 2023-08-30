@@ -16,10 +16,14 @@ public class SpendVO {
 	public String toString() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");	
 		System.out.println("+--------------------------------------------------+");
-		System.out.println("  ■ 금액: " + outMoney + "원" + "    ■ 분류: " + outGroup);
-		System.out.print("  ■ 입금일: " + sdf.format(outDate));
-		System.out.println("    ■ 메모: " + outMemo);
+		System.out.println("  [ 금액 ] " + outMoney + "원\t" + "\t[ 분류 ]\t" + outGroup);
+		System.out.println("  [ 지출일 ] " + sdf.format(outDate)+"\t[ 메모 ]\t" + outMemo);
 		return null;
 	}
-	
+	public String simpleString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");	
+		System.out.println("+--------------------------------------------------+");
+		System.out.println("  [ 금액 ] " + outMoney + "원" + "\t[ 지출일 ] " + sdf.format(outDate));
+		return null;
+	}
 }

@@ -32,5 +32,9 @@ public class SpendServiceImpl implements SpendService {
 	public int spendUpdate(SpendVO vo) {
 		return map.spendUpdate(vo);
 	}
+	@Override
+	public SpendVO spendSum() {
+		return map.spendSum();
+	}
 	
 }

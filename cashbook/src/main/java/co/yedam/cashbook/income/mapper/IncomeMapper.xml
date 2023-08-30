@@ -3,7 +3,8 @@
 <mapper namespace="co.yedam.cashbook.income.mapper.IncomeMapper">
 	<select id="incomeSelectList"
 		resultType="co.yedam.cashbook.income.service.IncomeVO">
-		SELECT * FROM CASH_IN ORDER BY in_date
+		SELECT * FROM CASH_IN
+		WHERE IN_NAME = #{inName} ORDER BY in_date
 	</select>
 
 	<select id="incomeSelect"
@@ -12,10 +13,15 @@
 		WHERE IN_DATE = #{inDate}
 	</select>
 	
+	<select id="incomeSum"
+		resultType="co.yedam.cashbook.income.service.IncomeVO">
+		SELECT SUM(MONEY_IN) FROM CASH_IN;
+	</select>
+	
 	<insert id="incomeInsert"
 		parameterType ="co.yedam.cashbook.income.service.IncomeVO">
 		INSERT INTO CASH_IN
-		VALUES(#{inId},#{moneyIn},#{inGroup},#{inDate},#{inMemo})
+		VALUES((SELECT NVL(MAX(IN_ID),0)+1 FROM CASH_IN),#{moneyIn},#{inGroup},#{inDate},#{inMemo},#{inName})
 	</insert>
 	
 	<delete id="incomeDelete"
@@ -34,6 +40,8 @@
 		</set>
 		WHERE IN_DATE = #{inDate}
 	</update>
+	
+	
 
 
 </mapper>

@@ -14,8 +14,8 @@ public class IncomeServiceImpl implements IncomeService {
 	private SqlSession sqlSession = DataSource.getInstance().openSession(true);
 	private IncomeMapper map = sqlSession.getMapper(IncomeMapper.class);
 	@Override
-	public List<IncomeVO> incomeSelectList() {
-		return map.incomeSelectList();
+	public List<IncomeVO> incomeSelectList(IncomeVO vo) {
+		return map.incomeSelectList(vo);
 	}
 	@Override
 	public IncomeVO incomeSelect(IncomeVO vo) {
@@ -33,6 +33,11 @@ public class IncomeServiceImpl implements IncomeService {
 	public int incomeUpdate(IncomeVO vo) {
 		return map.incomeUpdate(vo);
 	}
+	@Override
+	public IncomeVO incomeSum() {
+		return map.incomeSum();
+	}
+	
 	
 	
 

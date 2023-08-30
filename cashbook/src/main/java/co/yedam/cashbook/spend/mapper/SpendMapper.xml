@@ -11,11 +11,16 @@
 		SELECT * FROM CASH_OUT
 		WHERE OUT_DATE = #{outDate}
 	</select>
+	
+	<select id="spendSum"
+		resultType="co.yedam.cashbook.spend.service.SpendVO">
+		SELECT SUM(OUT_MONEY) FROM CASH_OUT;
+	</select>
 
 	<insert id="spendInsert"
 		parameterType="co.yedam.cashbook.spend.service.SpendVO">
 		INSERT INTO CASH_OUT
-		VALUES(#{outId},#{outMoney},#{outGroup},#{outDate},#{outMemo})
+		VALUES((SELECT NVL(MAX(OUT_ID),0)+1 FROM CASH_OUT),#{outMoney},#{outGroup},#{outDate},#{outMemo})
 	</insert>
 	<delete id="spendDelete"
 		parameterType="co.yedam.cashbook.spend.service.SpendVO">
@@ -24,7 +29,7 @@
 	</delete>
 	<update id="spendUpdate"
 		parameterType="co.yedam.cashbook.spend.service.SpendVO">
-		UPDATE CASH_IN
+		UPDATE CASH_OUT
 		<set>
 			<if test="outMoney != 0">OUT_MONEY = #{outMoney},</if>
 			<if test="outGroup != null">OUT_GROUP = #{outGroup},</if>

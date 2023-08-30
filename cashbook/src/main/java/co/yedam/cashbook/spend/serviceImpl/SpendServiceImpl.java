@@ -13,8 +13,8 @@ public class SpendServiceImpl implements SpendService {
 	private SqlSession sqlSession = DataSource.getInstance().openSession(true);
 	private SpendMapper map = sqlSession.getMapper(SpendMapper.class);
 	@Override
-	public List<SpendVO> spendSelectList() {
-		return map.spendSelectList();
+	public List<SpendVO> spendSelectList(SpendVO vo) {
+		return map.spendSelectList(vo);
 	}
 	@Override
 	public SpendVO spendSelect(SpendVO vo) {

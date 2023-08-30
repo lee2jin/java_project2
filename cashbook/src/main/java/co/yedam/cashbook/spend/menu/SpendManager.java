@@ -16,7 +16,7 @@ public class SpendManager {
 	private Scanner sc = new Scanner(System.in);
 	private SpendService dao = new SpendServiceImpl();
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
-	private int no;
+//	private int no;
 
 	private void mainTitle() {
 		System.out.println("====================================================");
@@ -31,7 +31,7 @@ public class SpendManager {
 		System.out.print("  ▶ 메뉴를 선택하세요! >> ");
 	}
 
-	public void run() {
+	public void run(String id) {
 		boolean b = false;
 		do {
 			mainTitle();
@@ -40,24 +40,24 @@ public class SpendManager {
 
 			switch (menu) {
 			case 1:
-				spendInsert();
+				spendInsert(id);
 				break;
 			case 2:
-				spendUpdate();
+				spendUpdate(id);
 				break;
 
 			case 3:
-				spendDelete();
+				spendDelete(id);
 				break;
 
 			case 4:
-				spendList();
+				spendList(id);
 				break;
 			case 5:
-				spendSelect();
+				spendSelect(id);
 				break;
 			case 6:
-				spendSum();
+				spendSum(id);
 				break;
 			case 7:
 				b=true;
@@ -68,10 +68,12 @@ public class SpendManager {
 	}
 	
 	// --------------------------------------------- ★ 전체 지출 합계
-	private void spendSum() {
+	private void spendSum(String id) {
+		SpendVO vo = new SpendVO();
 		int sum = 0;
+		vo.setOutName(id);
 		List<SpendVO> spends = new ArrayList<SpendVO>();
-		spends = dao.spendSelectList();
+		spends = dao.spendSelectList(vo);
 		for (SpendVO i : spends) {
 			sum += i.getOutMoney();
 		}
@@ -79,8 +81,9 @@ public class SpendManager {
 	}
 
 	// --------------------------------------------- ★ 날짜(한건) 조회
-	private void spendSelect() {
+	private void spendSelect(String id) {
 		SpendVO vo = new SpendVO();
+		vo.setOutName(id);
 		while (true) {
 			System.out.print("  ▶ 조회 날짜를 입력하세요.");
 			String date = sc.nextLine();
@@ -99,17 +102,20 @@ public class SpendManager {
 	}
 
 	// --------------------------------------------- ★ 전체목록 조회
-	private void spendList() {
+	private void spendList(String id) {
+		SpendVO vo = new SpendVO();
 		List<SpendVO> spends = new ArrayList<SpendVO>();
-		spends = dao.spendSelectList();
+		vo.setOutName(id);
+		spends = dao.spendSelectList(vo);
 		for (SpendVO i : spends) {
 			i.simpleString();
 		}
 	}
 
 	// --------------------------------------------- ★ 삭제하기
-	private void spendDelete() {
+	private void spendDelete(String id) {
 		SpendVO vo = new SpendVO();
+		vo.setOutName(id);
 		while (true) {
 			System.out.print("  ▶ 삭제 날짜 입력를 입력하세요(yyMMdd)");
 			String date = sc.nextLine();
@@ -127,8 +133,9 @@ public class SpendManager {
 	}
 
 	// --------------------------------------------- ★ 수정하기
-	private void spendUpdate() {
+	private void spendUpdate(String id) {
 		SpendVO vo = new SpendVO();
+		vo.setOutName(id);
 		System.out.println("  ▶ 수정 날짜를 입력하세요(yyMMdd)");
 		String date = sc.nextLine();
 		try {
@@ -148,6 +155,7 @@ public class SpendManager {
 			group();
 			int no = sc.nextInt();
 			sc.nextLine();
+			
 			switch (no) {
 			case 1:
 				vo.setOutGroup("생활");
@@ -205,10 +213,10 @@ public class SpendManager {
 	}
 
 	// --------------------------------------------- ★ 추가하기
-	private void spendInsert() {
+	private void spendInsert(String id) {
 		SpendVO vo = new SpendVO();
 
-		vo.setOutId(no);
+//		vo.setOutId(no);
 
 		System.out.print("  ▶ 금액을 입력하세요 >> ");
 		vo.setOutMoney(sc.nextInt());
@@ -248,10 +256,10 @@ public class SpendManager {
 
 		System.out.print("  ▶ 지출 내용을 입력하세요(선택사항) >> ");
 		vo.setOutMemo(sc.nextLine());
-
+		vo.setOutName(id);
 		if (dao.spendInsert(vo) != 0) {
 			System.out.println("  ※ 저장 완료");
-			no++;
+//			no++;
 		} else {
 			System.out.println("  ※ 저장 실패");
 		}

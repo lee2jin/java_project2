@@ -12,6 +12,7 @@ public class SpendVO {
 	private String outMemo;
 	private Date outDate;
 	private int outId;
+	private String outName;
 	
 	public String toString() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");	

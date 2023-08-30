@@ -3,7 +3,7 @@ package co.yedam.cashbook.spend.service;
 import java.util.List;
 
 public interface SpendService {
-	List<SpendVO> spendSelectList(); // 전체
+	List<SpendVO> spendSelectList(SpendVO vo); // 전체
 
 	SpendVO spendSelect(SpendVO vo); // 한건
 

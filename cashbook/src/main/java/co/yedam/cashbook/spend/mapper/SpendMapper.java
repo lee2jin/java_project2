@@ -5,7 +5,7 @@ import co.yedam.cashbook.spend.service.SpendVO;
 
 
 public interface SpendMapper {
-	List<SpendVO> spendSelectList(); // 전체
+	List<SpendVO> spendSelectList(SpendVO vo); // 전체
 
 	SpendVO spendSelect(SpendVO vo); // 한건
 

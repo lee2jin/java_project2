@@ -25,7 +25,7 @@ public class MainMenu {
 		System.out.println("====================================================");
 		System.out.println("|              1. 로그인        2. 회원가입             |");
 		System.out.println("+--------------------------------------------------+");
-		System.out.print("  ▶ 메뉴를 선택하세요! >> ");
+		System.out.print("  ▶ 메뉴를 선택하세요 >> ");
 	}
 	
 
@@ -59,7 +59,7 @@ public class MainMenu {
 			vo.setUserPassword(sha256.encrypt(vo.getUserPassword()));
 			vo = dao.userSelect(vo);
 			if (vo != null) {
-				System.out.println("  ★☆ " + vo.getUserName() + "님 환영합니다 ☆★");
+				System.out.println("  ★☆ " + vo.getUserName() + "님 환영합니다! ☆★");
 				b = true;
 			} else {
 				System.out.println("  ※ 정보가 일치하지 않습니다.");
@@ -93,7 +93,7 @@ public class MainMenu {
 		System.out.println("+--------------------------------------------------+");
 		System.out.println("+     1. 수입 관리   2. 지출 관리   3 유저관리   4. 종 료    +");
 		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.print("  ▶ 메뉴를 선택하세요! >> ");
+		System.out.print("  ▶ 메뉴를 선택하세요 >> ");
 	}
 
 	public void menu(String id) {
@@ -107,7 +107,7 @@ public class MainMenu {
 				im.run(id);
 				break;
 			case 2:
-				sm.run();
+				sm.run(id);
 				break;
 			case 3:
 				um.run();

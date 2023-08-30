@@ -3,7 +3,8 @@
 <mapper namespace="co.yedam.cashbook.spend.mapper.SpendMapper">
 	<select id="spendSelectList"
 		resultType="co.yedam.cashbook.spend.service.SpendVO">
-		SELECT * FROM CASH_OUT ORDER BY out_date
+		SELECT * FROM CASH_OUT 
+		WHERE OUT_NAME = #{outName} ORDER BY out_date
 	</select>
 
 	<select id="spendSelect"
@@ -20,7 +21,7 @@
 	<insert id="spendInsert"
 		parameterType="co.yedam.cashbook.spend.service.SpendVO">
 		INSERT INTO CASH_OUT
-		VALUES((SELECT NVL(MAX(OUT_ID),0)+1 FROM CASH_OUT),#{outMoney},#{outGroup},#{outDate},#{outMemo})
+		VALUES((SELECT NVL(MAX(OUT_ID),0)+1 FROM CASH_OUT),#{outMoney},#{outGroup},#{outDate},#{outMemo},#{outName})
 	</insert>
 	<delete id="spendDelete"
 		parameterType="co.yedam.cashbook.spend.service.SpendVO">
